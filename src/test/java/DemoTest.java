@@ -1,65 +1,78 @@
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.demo.Base64;
-import com.demo.UnifiedInterceptor;
+import com.jaf.demo.Rsa;
+import com.jaf.demo.RsaTool;
+import com.jaf.demo.SignCrypt;
 import org.junit.Test;
 
+import java.security.interfaces.RSAPublicKey;
+import java.util.HashMap;
+import java.util.UUID;
+
 public class DemoTest {
+    private String key = UUID.randomUUID().toString().substring(0, 8);//uuid 8
 
-    //    X-Udid: c64a11a9c335422790085bf5b3efba0f
-//    X-Client-Time: 1561078679000
-//    X-Sign: b0246f8e447c646a39008da4a4f676a8
-//    X-AccessToken: nh7tEZwOfjFBw15ZXyROHA_JXverPP9KVRbF09iXBU8enX6l0i655EIny-mUOQ0Gyt09wYyskUZb-b_HK-0G0Ft57APMSaHYH7WfBslW2eJApTe6BY3-3O1B4fRkz_O1G-M65ZMBApdQKkkK3uBYfzEqxIlOBqpKOgIrL3xKli8
-//    X-NetWork:
-//    X-User-Agent: mapi/1.0 (windows 10;pc.yupaopao.bixin 6.0.1.1;windows;qt-fusion)
-//    X-Authentication: 08be1712cde9e6a50c49267a501aabb4
-//    Content-Type: application/json; charset=utf-8
-//    Content-Length: 112
-//    Connection: Keep-Alive
-//    Accept-Encoding: gzip, deflate
-//    Accept-Language: zh-CN,en,*
-//    User-Agent: Mozilla/5.0
     @Test
-    public void testDemo() {
+    public void testpack() throws Exception {
 
-        JSONObject object = new JSONObject();
-        object.put("X-Udid", "c64a11a9c335422790085bf5b3efba0f");
-        object.put("X-Client-Time", "1561078679001");
-        object.put("X-Sign", "7a710cd43560c5f873de22b4537c27ae");
-        object.put("X-AccessToken", "");
-        object.put("X-NetWork", "");
-        object.put("X-User-Agent", "mapi/1.0 (windows 10;pc.yupaopao.bixin 6.0.1.1;windows;qt-fusion)");
-        String udid = "c64a11a9c335422790085bf5b3efba0f";
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{\"");
-        stringBuilder.append("X-Udid");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("c64a11a9c335422790085bf5b3efba0f");
-        stringBuilder.append("\",\"");
-        stringBuilder.append("X-Client-Time");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("1561121147000");
-        stringBuilder.append("\",\"");
-        stringBuilder.append("X-Sign");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("146c4b76a751ea2c1d6c1d2a8a807d4d");
-        stringBuilder.append("\",\"");
-        stringBuilder.append("X-AccessToken");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("OAX4K1H7cRNUA1aQ04KmQ0aEvhqYQ8izYcl73C8ZjGUenX6l0i655EIny-mUOQ0Gyt09wYyskUZb-b_HK-0G0Ft57APMSaHYH7WfBslW2eJApTe6BY3-3O1B4fRkz_O1G-M65ZMBApdQKkkK3uBYfzEqxIlOBqpKOgIrL3xKli8");
-        stringBuilder.append("\",\"");
-        stringBuilder.append("X-NetWork");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("");
-        stringBuilder.append("\",\"");
-        stringBuilder.append("X-User-Agent");
-        stringBuilder.append("\":\"");
-        stringBuilder.append("mapi/1.0 (windows 10;pc.yupaopao.bixin 6.0.1.1;windows;qt-fusion)");
-        stringBuilder.append("\"}");
-        String str = UnifiedInterceptor.sign(stringBuilder.toString());
-        System.out.println(UnifiedInterceptor.sign("123"));
-        System.out.println(str);
+
+        //http://{{host}}/businessHsh/hshShop/personalCellPhone/multiSubmit.jsps
+
+        String key = "c146ce01";//响应后，也需要这个参数去解码的，随机8位字符串，这个key后续解码需要用
+        //p1
+        //查詢數據
+        //上传文件数据 JSON=1&V=A90&T=2&list=%5B%7B%22imei%22%3A%22359409083518852%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213928542212%22%2C%22phoneno2%22%3A%22%22%7D%2C%7B%22imei%22%3A%22359409084233592%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213434888930%22%2C%22phoneno2%22%3A%22%22%7D%5D&token=91708312508442e4a17a69fba6fb3fb9&_randomNum=1562145124295&longitude=&latitude=
+        //_randomNum=毫秒时间错
+
+        //获取验证码
+        //http://xx/businessHsh/appserver/login/sendCMOPSMS.jsps
+        //JSON=1&V=A90&T=2&smstype=2&busphonenumber=xx&token=&_randomNum=1562150222971&longitude=113.10848985460069&latitude=23.02796088324653
+
+
+        //xx
+        //xx 463567
+
+
+        //JSON=1&V=A90&T=2&password=&imie=&randompwd=456456&region=&accountId=EFS5a1130001&token=&_randomNum=1562226861501&longitude=113.12199978298611&latitude=23.021905110677082
+
+        //登录参数
+        //http://xx/businessHsh/appserver/login/operatorLoginCMOP.jsps
+        //JSON=1&V=A90&T=2&password=&imie=&randompwd=12331&region=&accountId=EFS5a1130001%0D&token=&_randomNum=1562150442125&longitude=113.10849012586806&latitude=23.02796088324653
+        //JSON=1&V=A90&T=2&password=&imie=&randompwd=463567&region=0757&accountId=FS02SH19016001&token=&_randomNum=1562227469456&longitude=113.12448459201389&latitude=23.031454264322917
+
+        //JSON=1&V=A90&T=2&password=&imie=&randompwd=931557&region=&accountId=xxx&token=&_randomNum=1562226570445&longitude=113.11616265190972&latitude=23.027517632378473
+        HashMap<String, String> map = new HashMap<>();
+        map.put("token", "91708312508442e4a17a69fba6fb3fb9");
+        map.put("JSON", "1");
+        map.put("V", "A90");
+        map.put("T", "2");
+        //[{"imei":"359409083518852","imei2":"","imei2phoneno2":"","imeiphoneno2":"","phoneno":"13928542212","phoneno2":""},{"imei":"35940908123192","imei2":"","imei2phoneno2":"123","imeiphoneno2":"","phoneno":"13434888930","phoneno2":""}]
+        //url encode
+        map.put("list", "%5B%7B%22imei%22%3A%2343423423%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213928542212%22%2C%22phoneno2%22%3A%22%22%7D%2C%7B%22imei%22%3A%22359409084233592%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213434888930%22%2C%22phoneno2%22%3A%22%22%7D%5D");//
+        map.put("_randomNum", "1562145124295");//毫秒时间错
+        map.put("longitude", "");//
+        map.put("latitude", "");//
+        //longitude=&latitude=
+        String query = "JSON=1&V=A90&T=2&list=%5B%7B%22imei%22%3A%22359409083518852%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213928542212%22%2C%22phoneno2%22%3A%22%22%7D%2C%7B%22imei%22%3A%22359409084233592%22%2C%22imei2%22%3A%22%22%2C%22imei2phoneno2%22%3A%22%22%2C%22imeiphoneno2%22%3A%22%22%2C%22phoneno%22%3A%2213434888930%22%2C%22phoneno2%22%3A%22%22%7D%5D&token=91708312508442e4a17a69fba6fb3fb9&_randomNum=1562145124295&longitude=&latitude=";
+        String p1 = SignCrypt.encrypt(query, key);
+
+        //p0
+        RSAPublicKey publicKey = Rsa.getRsaPublicKey();//
+        String p0 = RsaTool.sign(p1, key, publicKey);//签名
+
+        //RsaTool.decode(p0, publicKey);
+
+        System.out.println(p0);
+        System.out.println(p1);
+
+        p1 = SignCrypt.decrypt("306263437842447a66436667787a586d736c336670303577364e4f4a36344e7153784b486e617030623236394965353538464d434d5136314c6469554168596d7344586c2f7166554171556952646d33776948534f54762f666864324a5059454b77643035466a69736663654867683774544657626566366a483934512b4e552f43344a52486d385879364b4a4f48346d543430437831492f312b42695969785052744e4a3466466269726b62746c4446424673456d5834576b626263434452666c713347504144577a5062787264426f554c554a6f5a4f70464d31636a6d2b63777975397a34305241314539706164516639757a6b5146585164364977776473712b394d45547562317538306f63716f6a314b373730783363366c49352b71634f5331784e56452b4d4c4b744d764f487558384469555268436a6e2b354430716b546d71667631495a354f746c6570686b4e5245693643524a326767445032642f5431483773593931615831624c5a535a4e6b322f6a7076332f456b436f3573315333704f4d51785175524c6d78773174687357686e425172386c2f7432397a6a4154646b596f3943343d", key);
+        System.out.println(p1);
+    }
+
+    @Test
+    public void decode() {
+        String key = "c146ce01";
+        String res = SignCrypt.decrypt("31634948774b43574f70485059475054396f4857484638676a4844524c64504d3553763145615a5546636a69744d47637936705a792f65586a46324f30373745746e51754d7a637052665869382b544435492b4f505039504f3647486f646c3666764830305a7948792b576a356a66714d694d336978475250484b505454514b523778775667467663432b51725a75484d4669432b7744574b654345374971624d4f565a7756782b65662f624c6739306d3831306d703079714f6e7a4235354b59516f3475304e6f3176354545782b4e333363666d53306d414a3951712f634161344f63647a4c622f64314b6d4f3879364547304f733061555858694b494739357374786e5442525464367a644d624455592b454338742b6679396568682b526452687a44616f442b496b4d736a3554447862646c445246532b3879672b556a5061634a32367731756c2f365732435a53657447716a5439627338374a7949594d6b5a7579376b706b5863634357324d5447763937446a43682f4a4776502f384b35467268444541746b714c734f33713366354d6446466f43335a654a7051313068785a436431573352733d", key);
+        System.out.println(res);
     }
 }
+//44343668366c334d486f674c632f5151524d5748694166342f576d6b7033643335416e2f636d72567a6b54486e592b554954744141494b4745504b74697953363138644778492b4a524a6971472b66586535536c676c496b744d586d4467344d382f64776665386f424d51684a357a4d34576f75544633454f44786d6774636b6268673872704243594f35484845783348585275717435557771456557465851
+//44343668366c334d486f674c632f5151524d5748694166342f576d6b7033643335416e2f636d72567a6b54486e592b554954744141494b4745504b74697953363138644778492b4a524a6971472b66586535536c676c496b744d586d4467344d382f64776665386f424d51684a357a4d34576f75544633454f44786d6774636b6268673872704243594f35484845783348585275717435557771456557465851
